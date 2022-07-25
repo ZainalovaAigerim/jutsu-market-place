@@ -1,0 +1,13 @@
+{
+  "watches": [
+    {
+      "name": "name",
+      "brand": "brand",
+      "price": 1000,
+      "year": "2022-07-09",
+      "photo": "photo",
+      "country": "germany",
+      "id": 1
+    }
+  ]
+}
