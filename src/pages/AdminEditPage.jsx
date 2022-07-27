@@ -1,17 +1,21 @@
 import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { AdminContext } from "../contexts/AdminProvider";
 import {
   Container,
   TextField,
+  FormControl,
   Select,
   MenuItem,
-  FormControl,
   InputLabel,
   Button,
 } from "@mui/material";
-import { AdminContext } from "../contexts/AdminProvider";
 
-function AdminAddPage() {
-  const { sendNewWatch } = React.useContext(AdminContext);
+function AdminEditPage() {
+  const { getWatchToEdit, watchToEdit, saveEditedWatch } =
+    React.useContext(AdminContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const [name, setName] = React.useState("");
   const [brand, setBrand] = React.useState("");
@@ -21,33 +25,46 @@ function AdminAddPage() {
   const [country, setCountry] = React.useState("");
 
   const handleSubmit = () => {
-    const newWatch = {
-      name: name.trim(),
-      brand: brand.trim(),
+    const editedWatch = {
+      name,
+      brand,
       price,
-      year: year.trim(),
-      photo: photo.trim(),
-      country: country.trim(),
+      year,
+      photo,
+      country,
+      id,
     };
-    for (let i in newWatch) {
-      if (!newWatch[i]) {
-        alert("Заполните!");
-        return;
+    for (let i in editedWatch) {
+      if (typeof editedWatch[i] === "string") {
+        if (!editedWatch[i].trim()) {
+          alert("Заполните поле");
+          return;
+        }
       }
     }
-    sendNewWatch(newWatch);
-    setName("");
-    setBrand("");
-    setYear("");
-    setPhoto("");
-    setCountry("");
-    setPrice("");
+    saveEditedWatch(editedWatch);
+    navigate("/admin");
   };
 
+  React.useEffect(() => {
+    getWatchToEdit(id);
+  }, []);
+
+  React.useEffect(() => {
+    if (watchToEdit) {
+      setName(watchToEdit.name);
+      setBrand(watchToEdit.brand);
+      setPrice(watchToEdit.price);
+      setYear(watchToEdit.year);
+      setCountry(watchToEdit.country);
+      setPhoto(watchToEdit.photo);
+    }
+  }, [watchToEdit]);
+
   return (
-    <div className="admin-add-page">
+    <div className="admin-edit-page">
       <Container>
-        <h2>Добавить товары</h2>
+        <h2>Редактировать</h2>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -69,16 +86,16 @@ function AdminAddPage() {
           <TextField
             value={price}
             onChange={(e) => setPrice(parseInt(e.target.value))}
+            type="number"
             label="Цена"
             variant="standard"
-            type="number"
           />
           <TextField
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            label="Год Производства"
-            variant="standard"
             type="date"
+            label="Дата производства"
+            variant="standard"
           />
           <TextField
             value={photo}
@@ -91,7 +108,6 @@ function AdminAddPage() {
             <Select
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              label="Страна"
             >
               <MenuItem value="china">Китай</MenuItem>
               <MenuItem value="japan">Япония</MenuItem>
@@ -102,7 +118,7 @@ function AdminAddPage() {
             </Select>
           </FormControl>
           <Button variant="outlined" type="submit">
-            Добавить
+            Сохранить
           </Button>
         </form>
       </Container>
@@ -110,4 +126,4 @@ function AdminAddPage() {
   );
 }
 
-export default AdminAddPage;
+export default AdminEditPage;

@@ -5,9 +5,36 @@
       "brand": "brand",
       "price": 1000,
       "year": "2022-07-09",
-      "photo": "photo",
+      "photo": "https://monochrome-watches.com/wp-content/uploads/2022/05/Vacheron-Constantin-Overseas-Perpetual-Calendar-Ultra-Thin-Skeleton-Blue-1.jpg",
       "country": "germany",
       "id": 1
+    },
+    {
+      "name": "jn",
+      "brand": "hnj",
+      "price": 2536,
+      "year": "2022-07-14",
+      "photo": "photo",
+      "country": "czech",
+      "id": 2
+    },
+    {
+      "name": "название",
+      "brand": "бренд",
+      "price": 6485,
+      "year": "2022-07-13",
+      "photo": "картинка",
+      "country": "germany",
+      "id": 3
+    },
+    {
+      "name": "название2",
+      "brand": "бренд2",
+      "price": 49853,
+      "year": "2022-07-29",
+      "photo": "картинка2",
+      "country": "germany",
+      "id": 4
     }
   ]
 }
